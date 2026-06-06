@@ -1,17 +1,14 @@
-// Reveal on scroll
 const els = document.querySelectorAll('.reveal');
 const obs = new IntersectionObserver(e => e.forEach(x => {
   if (x.isIntersecting) { x.target.classList.add('on'); obs.unobserve(x.target); }
 }), { threshold: 0.1 });
 els.forEach(el => obs.observe(el));
 
-// Navbar shrink on scroll
 const nav = document.querySelector('.navbar');
 window.addEventListener('scroll', () => {
   nav.style.padding = window.scrollY > 50 ? '0.7rem 0' : '1.1rem 0';
 });
 
-// Formspree contact form
 const sendBtn = document.getElementById('sendBtn');
 const feedback = document.getElementById('form-feedback');
 
@@ -27,7 +24,6 @@ sendBtn.addEventListener('click', async function () {
   const service = document.getElementById('f-service').value;
   const message = document.getElementById('f-message').value.trim();
 
-  // Basic validation
   if (!name || !email || !message) {
     showFeedback('error', '<i class="bi bi-exclamation-circle"></i> Por favor completa los campos obligatorios.');
     return;
@@ -37,7 +33,6 @@ sendBtn.addEventListener('click', async function () {
     return;
   }
 
-  // Loading state
   sendBtn.disabled = true;
   sendBtn.innerHTML = '<i class="bi bi-hourglass-split"></i> Enviando...';
   feedback.style.display = 'none';
@@ -52,12 +47,10 @@ sendBtn.addEventListener('click', async function () {
     if (res.ok) {
       showFeedback('success', '<i class="bi bi-check-circle"></i> ¡Mensaje enviado! Te respondo en menos de 24 horas.');
       sendBtn.innerHTML = '<i class="bi bi-check-lg"></i> Mensaje enviado';
-      // Clear fields
       document.getElementById('f-name').value = '';
       document.getElementById('f-email').value = '';
       document.getElementById('f-service').value = '';
       document.getElementById('f-message').value = '';
-      // Reset button after 4s
       setTimeout(() => {
         sendBtn.innerHTML = 'Enviar mensaje <i class="bi bi-arrow-up-right"></i>';
         sendBtn.disabled = false;
@@ -78,17 +71,12 @@ sendBtn.addEventListener('click', async function () {
 
 
 
-/* ============================================================
-   script.js — Juliette Ossandón Portfolio
-   Cursor personalizado + lógica general
-   ============================================================ */
+
 
 (function () {
   'use strict';
 
-  /* ----------------------------------------------------------
-     1. CUSTOM CURSOR
-  ---------------------------------------------------------- */
+ 
   const dot  = document.createElement('div');
   const ring = document.createElement('div');
   dot.id  = 'cursor-dot';
@@ -100,7 +88,6 @@ sendBtn.addEventListener('click', async function () {
   let ringX  = -200, ringY  = -200;
   let raf;
 
-  /* Actualiza posición del punto instantáneamente */
   document.addEventListener('mousemove', function (e) {
     mouseX = e.clientX;
     mouseY = e.clientY;
@@ -112,7 +99,6 @@ sendBtn.addEventListener('click', async function () {
     }
   });
 
-  /* El ring sigue con suavizado (lerp) */
   function lerpRing() {
     ringX += (mouseX - ringX) * 0.12;
     ringY += (mouseY - ringY) * 0.12;
@@ -122,7 +108,6 @@ sendBtn.addEventListener('click', async function () {
   }
   lerpRing();
 
-  /* Hover sobre elementos interactivos */
   const hoverTargets = 'a, button, [role="button"], input, select, textarea, label, .svc-item, .proj-row, .proc-row';
 
   document.addEventListener('mouseover', function (e) {
@@ -139,7 +124,6 @@ sendBtn.addEventListener('click', async function () {
     }
   });
 
-  /* Click: efecto de escala */
   document.addEventListener('mousedown', function () {
     ring.style.transform = 'translate(-50%, -50%) scale(0.7)';
   });
@@ -147,7 +131,6 @@ sendBtn.addEventListener('click', async function () {
     ring.style.transform = 'translate(-50%, -50%) scale(1)';
   });
 
-  /* Ocultar cursor cuando sale de la ventana */
   document.addEventListener('mouseleave', function () {
     dot.style.opacity  = '0';
     ring.style.opacity = '0';
@@ -157,9 +140,7 @@ sendBtn.addEventListener('click', async function () {
     ring.style.opacity = '';
   });
 
-  /* ----------------------------------------------------------
-     2. REVEAL ON SCROLL
-  ---------------------------------------------------------- */
+ 
   const revealEls = document.querySelectorAll('.reveal');
 
   if ('IntersectionObserver' in window) {
@@ -178,9 +159,7 @@ sendBtn.addEventListener('click', async function () {
     revealEls.forEach(function (el) { el.classList.add('visible'); });
   }
 
-  /* ----------------------------------------------------------
-     3. NAVBAR — sombra al hacer scroll
-  ---------------------------------------------------------- */
+  
   const navbar = document.querySelector('.navbar');
 
   window.addEventListener('scroll', function () {
@@ -191,9 +170,7 @@ sendBtn.addEventListener('click', async function () {
     }
   }, { passive: true });
 
-  /* ----------------------------------------------------------
-     4. FORMULARIO DE CONTACTO — envío + feedback
-  ---------------------------------------------------------- */
+ 
   var sendBtn  = document.getElementById('sendBtn');
   var feedback = document.getElementById('form-feedback');
 
@@ -214,7 +191,6 @@ sendBtn.addEventListener('click', async function () {
         return;
       }
 
-      /* Simulación de envío — reemplaza con tu lógica real */
       sendBtn.disabled = true;
       sendBtn.textContent = 'Enviando…';
 
@@ -241,9 +217,7 @@ sendBtn.addEventListener('click', async function () {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   }
 
-  /* ----------------------------------------------------------
-     5. TICKER — pausa al hover
-  ---------------------------------------------------------- */
+  
   var tickerTrack = document.querySelector('.ticker-track');
   if (tickerTrack) {
     tickerTrack.addEventListener('mouseenter', function () {
@@ -254,9 +228,7 @@ sendBtn.addEventListener('click', async function () {
     });
   }
 
-  /* ----------------------------------------------------------
-     6. ACTIVE NAV LINK — resalta el link de la sección visible
-  ---------------------------------------------------------- */
+  
   var sections  = document.querySelectorAll('section[id]');
   var navLinks  = document.querySelectorAll('.nav-link-item');
 
